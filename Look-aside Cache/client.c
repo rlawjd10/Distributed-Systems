@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     printf("Request ID: %d\n",cnt++);
 
     generate_key(SendMsg.key);  // 임의의 key를 생성한다.
-    SendMsg.type = READ_REP; // 타입은 읽기 요청
+    SendMsg.type = READ_REQ; // 타입은 읽기 요청
     strcpy(SendMsg.value, ""); // 읽기 요청은 key에 대한 value를 요청하므로 value는 아무것도 없이 보낸다.
     pkt_size = sizeof(struct KVS) - VALUE_SIZE;  // 해당 client는 읽기 요청/답신만이 존재한다고 가정하므로, 전체 패킷 크기에서 VALUE-SIZE를 제외한다.
     printf("Sent bytes: %ld\n",pkt_size); // 패킷 사이즈 출력
@@ -59,18 +59,19 @@ int main(int argc, char *argv[]) {
       if (SendMsg.type == CACHE_HIT) { // Cache hit인 경우, 관련 정보(수신 데이터 크기, key, value, type)를 출력하고 처리 종료
         printf("Cache Hit!!\n");
         printf("Received bytes: %d\n",n);
-        printf("Type: %s Key: %s Value: %s\n\n",get_type(SendMsg),SendMsg.key, SendMsg.value); // 수신한 내용을 출력한다.
+      printf("Type: %s Key: %s Value: %s\n\n",get_type(SendMsg),SendMsg.key, SendMsg.value); // 수신한 내용을 출력한다.
       }
       else if (SendMsg.type == CACHE_MISS) { // Cache miss인 경우
         printf("Cache Miss!!\n"); 
         srv_addr.sin_port = htons(SERVER_PORT + 1); // 5002번 포트로 송신하기 위해서 +1을 한다.
         sendto(sock, &SendMsg, pkt_size, 0, (struct sockaddr *)&srv_addr, sizeof(srv_addr));  //스토리지 서버에 보낸다.
         n2 = recvfrom(sock, &SendMsg, sizeof(SendMsg), 0, (struct sockaddr *)&src_addr, &src_addr_len); // 스토리지 서버로부터 받은 데이터를 SendMsg 구조체 변수에 저장. 송신자의 정보를 src_addr에 저장
-        if (n2 > 0) { // 0바이트 초과일 때, 관련 정보 출력
+        if (n2 > 0) {
           printf("Received bytes: %d\n",n);
-          printf("Type: %s Key: %s Value: %s\n\n",get_type(SendMsg),SendMsg.key, SendMsg.value); 
+          printf("Type: %s Key: %s Value: %s\n\n",get_type(SendMsg),SendMsg.key, SendMsg.value); // 수신한 내용을 출력한다.
         }
       }
+      
     }
 
 	}
