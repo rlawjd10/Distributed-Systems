@@ -67,7 +67,8 @@ int main(int argc, char *argv[]) {
         sendto(sock, &SendMsg, pkt_size, 0, (struct sockaddr *)&srv_addr, sizeof(srv_addr));  //스토리지 서버에 보낸다.
         n2 = recvfrom(sock, &SendMsg, sizeof(SendMsg), 0, (struct sockaddr *)&src_addr, &src_addr_len); // 스토리지 서버로부터 받은 데이터를 SendMsg 구조체 변수에 저장. 송신자의 정보를 src_addr에 저장
         if (n2 > 0) {
-          printf("Received bytes: %d\n",n);
+          SendMsg.value[VALUE_SIZE - 1] = '\0'; // 필드값 오염을 방지하기 위해 null 문자로 끝내기
+          printf("Received bytes: %d\n",n2);
           printf("Type: %s Key: %s Value: %s\n\n",get_type(SendMsg),SendMsg.key, SendMsg.value); // 수신한 내용을 출력한다.
         }
       }
