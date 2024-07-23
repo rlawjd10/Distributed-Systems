@@ -16,3 +16,12 @@
 
 </div>
 </details>
+
+`client` <br/><br/>
+<img src="https://github.com/user-attachments/assets/42d69ea8-6c89-4251-aae3-39da9e3d1e26" width="600" height="400"/>
+`primary` <br/><br/>
+<img src="https://github.com/user-attachments/assets/d842bf1b-16db-474c-9d7c-74521c636d94" width="600" height="400"/>
+`backup1` <br/><br/>
+<img src="https://github.com/user-attachments/assets/237bbfe6-f04e-45e9-a7da-4661e93b29f7" width="600" height="400"/>
+`backup2` <br/><br/>
+<img src="https://github.com/user-attachments/assets/e97b2b2d-2fb6-419e-82a8-724b508810a8" width="600" height="400"/>
